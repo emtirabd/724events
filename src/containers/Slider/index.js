@@ -8,24 +8,14 @@ const Slider = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const byDateDesc = data?.focus.sort((evtA, evtB) =>
-      new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-    );
-
     const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex < (byDateDesc?.length || 0) - 1 ? prevIndex + 1 : 0));
+      setIndex((prevIndex) => (prevIndex < (data.focus?.length || 0) - 1 ? prevIndex + 1 : 0));
     }, 5000);
 
     return () => {
       clearInterval(interval);
     };
   }, [data]);
-
-  const handleDotClick = (dotIndex) => {
-    if (index !== dotIndex) {
-      setIndex(dotIndex);
-    }
-  };
 
   return (
     <div className="SlideCardList">
@@ -52,7 +42,7 @@ const Slider = () => {
               type="radio"
               name="radio-button"
               checked={index === radioIdx}
-              onClick={() => handleDotClick(radioIdx)}
+              onChange={() => setIndex(radioIdx)}
             />
           ))}
         </div>
